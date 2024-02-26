@@ -1,14 +1,13 @@
 package com.dera.entities;
 
-import com.dera.enums.Role;
-
-import java.util.Comparator;
+import com.dera.enums.LibraryUserRole;
 
 public class Person {
     private String name;
-    private Role role;
+    private LibraryUserRole role;
 
-    public Person(String name, Role role) {
+
+    public Person(String name, LibraryUserRole role) {
         this.name = name;
         this.role = role;
     }
@@ -18,7 +17,7 @@ public class Person {
         return name;
     }
 
-    public Role getRole() {
+    public LibraryUserRole getRole() {
         return role;
     }
 

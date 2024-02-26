@@ -1,4 +1,4 @@
-package com.dera.implementations;
+package com.dera.utils;
 
 import com.dera.entities.Person;
 
@@ -14,4 +14,8 @@ public class PersonComparator implements Comparator<Person> {
             return 0;
         }
     }
+    //        Collections.sort(people,(s1,s2) ->s1.getRole().compareTo(s2.getRole()));
+//        people.forEach(
+//                (n) -> System.out.println(n)
+//        );
 }

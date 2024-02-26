@@ -1,8 +1,6 @@
 package com.dera.entities;
 
-import com.dera.services.Library;
-
-public class Book extends Library {
+public class Book extends Librarian {
     private String title;
     private int copies;
 
