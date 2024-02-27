@@ -1,7 +1,6 @@
 package com.dera.entities;
 
 import com.dera.enums.LibraryUserRole;
-
 public class Person {
     private String name;
     private LibraryUserRole role;

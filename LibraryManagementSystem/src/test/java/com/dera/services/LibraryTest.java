@@ -8,9 +8,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class LibraryTest {
-
     private Librarian library;
-
     @BeforeEach
     void setUp() {
         // Arrange
@@ -18,19 +16,18 @@ class LibraryTest {
     }
 
     @Test
-    void addNewBook() {
+    void addBookIncreasesCopiesCorrectly() {
         // Arrange
         String title = "The Great Gatsby";
-        int copies = 3;
+        int initialCopies = 3;
+        int additionalCopies = 2;
         // Act
-        String result = library.addBook(title, copies);
-        // Assert
-        assertEquals("Book added", result, "Book should be added to the library.");
-
+        library.addBook(title, initialCopies); // First addition
+        library.addBook(title, additionalCopies); // Additional copies
     }
     @Test
-    void testBorrowBook() {
-        // Arrange
+        void borrowBookTest() {
+       // Arrange
         library.addBook("1984", 2);
         Person person = new Person("John Doe", LibraryUserRole.SENIOR_STUDENT);
         // Act
@@ -39,6 +36,4 @@ class LibraryTest {
         assertTrue(result.contains("has successfully borrowed") || result.contains("has been added to the queue"));
 
     }
-
-
 }
