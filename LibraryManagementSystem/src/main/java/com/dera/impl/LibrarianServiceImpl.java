@@ -12,17 +12,13 @@ public class LibrarianServiceImpl implements LibrarianService{
     @Override
     public void addBook() {
     }
-
     @Override
     public void borrowBook() {
     }
-
-
     public void addBook(String title, int copies) {
         bookCopies.merge(title, copies, Integer::sum);
         System.out.println(copies + " copies of " + title + " added to library");
     }
-
     public String borrowBook(User user, String title) {
         Integer copies = bookCopies.get(title);
         if (copies == null || copies <= 0) {
@@ -34,6 +30,4 @@ public class LibrarianServiceImpl implements LibrarianService{
             return user.getName() + " has successfully borrowed " + title + ".";
         }
     }
-
-    // Optionally, implement a returnBook method similar to borrowBook but in reverse.
 }
