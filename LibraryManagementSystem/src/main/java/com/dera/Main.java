@@ -28,8 +28,6 @@ public class Main {
 
         librarian.displayQueueBeforeBorrowing(people, "The Great Gatsby");
 
-        System.out.println();
-
         librarian.borrowBooksForUsers(people, "The Great Gatsby");
 
         System.out.println();

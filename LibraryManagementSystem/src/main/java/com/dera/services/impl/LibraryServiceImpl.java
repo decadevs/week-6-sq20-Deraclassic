@@ -1,6 +1,7 @@
 
 package com.dera.services.impl;
 
+import com.dera.exceptions.BookNotFoundException;
 import com.dera.model.Book;
 import com.dera.model.User;
 import com.dera.services.LibraryService;
@@ -27,6 +28,7 @@ public class LibraryServiceImpl implements LibraryService {
     public void displayQueueBeforeBorrowing(List<User> users, String title) {
         System.out.println();
         System.out.println("******************Queue for borrowing '" + title + "'************************");
+        //functional programming
         users.forEach(user -> System.out.println(user.getRole() + " " + user.getName()));
 
     }
@@ -37,9 +39,11 @@ public class LibraryServiceImpl implements LibraryService {
         }
         System.out.println("**********************List of people who have borrowed " + title + "***********************");
         List<User> borrowers = bookBorrowers.get(title);
+        //functional programming
         borrowers.forEach(borrower -> System.out.println(borrower.getRole() + " " + borrower.getName() + " - " + title));
     }
     public void borrowBooksForUsers(List<User> users, String title) {
+        //functional programming
         users.forEach(user -> borrowBook(user, title));
     }
 
@@ -54,13 +58,14 @@ public class LibraryServiceImpl implements LibraryService {
             }
             synchronized (this) {
                 book.setCopies(book.getCopies() - 1);
+                //functional programming
                 bookBorrowers.computeIfAbsent(title, k -> new ArrayList<>()).add(user);
                 bookBorrowers.get(title).sort(Comparator.comparingInt(u -> u.getRole().getPriority()));
             }
             return user.getRole() + " " + user.getName() + " has successfully borrowed " + title + ".";
         } catch (Exception e) {
             System.err.println("An error occurred while trying to borrow the book: " + e.getMessage());
-            return "An error occurred during the borrowing process.";
+            throw new IllegalArgumentException("An error occurred while trying to borrow the book:");
         }
     }
     @Override
@@ -70,12 +75,17 @@ public class LibraryServiceImpl implements LibraryService {
         }
         Book book = books.get(title);
         if (book == null) {
-            throw new IllegalArgumentException("Book not from this Library.");
-            //return "Book not from this Library.";
+            throw new BookNotFoundException("Book not from this Library: " + title);
+
         }
         book.setCopies(book.getCopies() + 1);
         return title + " has been returned to the library.";
     }
+
+
+
+
+
 
 
 
