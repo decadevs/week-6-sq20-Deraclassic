@@ -1,5 +1,8 @@
 package com.dera.enums;
 
+import lombok.Getter;
+@Getter
+
 public enum UserRole {
     TEACHER(1),
     SENIOR_STUDENT(2),
@@ -9,9 +12,5 @@ public enum UserRole {
 
     UserRole(int priority) {
         this.priority = priority;
-    }
-
-    public int getPriority() {
-        return priority;
     }
 }

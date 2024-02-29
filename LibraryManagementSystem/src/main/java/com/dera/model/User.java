@@ -1,4 +1,4 @@
-package com.dera.entities;
+package com.dera.model;
 
 import com.dera.enums.UserRole;
 import lombok.Data;
