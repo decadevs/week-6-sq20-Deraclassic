@@ -2,6 +2,7 @@
 package com.dera.services.impl;
 
 import com.dera.exceptions.BookNotFoundException;
+import com.dera.exceptions.UserNotFoundException;
 import com.dera.model.Book;
 import com.dera.model.User;
 import com.dera.services.LibraryService;
@@ -50,11 +51,11 @@ public class LibraryServiceImpl implements LibraryService {
     @Override
     public String borrowBook(User user, String title) {
 
-        try {
+
             Book book = books.get(title);
             if (book == null || book.getCopies() <= 0) {
                 System.out.println(user.getRole() + " " + user.getName() + " cannot borrow " + title + " as it is not available.");
-                return "Book not part of our Catalogue or all copies taken.";
+                throw new BookNotFoundException("Book taken. Not availableg " + title);
             }
             synchronized (this) {
                 book.setCopies(book.getCopies() - 1);
@@ -63,15 +64,11 @@ public class LibraryServiceImpl implements LibraryService {
                 bookBorrowers.get(title).sort(Comparator.comparingInt(u -> u.getRole().getPriority()));
             }
             return user.getRole() + " " + user.getName() + " has successfully borrowed " + title + ".";
-        } catch (Exception e) {
-            System.err.println("An error occurred while trying to borrow the book: " + e.getMessage());
-            throw new IllegalArgumentException("An error occurred while trying to borrow the book:");
-        }
     }
     @Override
     public String returnBook(User user, String title) {
         if (user == null || title == null) {
-            throw new IllegalArgumentException("User and title must not be null.");
+            throw new UserNotFoundException("User and title must not be null.");
         }
         Book book = books.get(title);
         if (book == null) {
