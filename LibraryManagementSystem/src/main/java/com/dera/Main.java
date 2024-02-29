@@ -11,6 +11,7 @@ public class Main {
     public static void main(String[] args) {
         LibraryServiceImpl librarian = new LibraryServiceImpl();
         librarian.addBook("The Great Gatsby", 4);
+        librarian.addBook("Gold Digger",2);
 
         List<User> people = new ArrayList<>();
         people.add(new User("Mr. Smith", UserRole.TEACHER));
@@ -34,5 +35,7 @@ public class Main {
         System.out.println();
 
         librarian.displayAllBorrowersForTitle("The Great Gatsby");
+
+
     }
 }

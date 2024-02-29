@@ -64,9 +64,12 @@ class LibraryServiceTest {
 
     @Test
     void testBorrowBook() {
+        //Arrange
         libraryService.addBook("1984", 2);
         User user = new User("John Doe", UserRole.SENIOR_STUDENT);
+        //Act
         String result = libraryService.borrowBook(user, "1984");
+        //Assert
         assertTrue(result.contains("has successfully borrowed"));
     }
 
@@ -76,6 +79,7 @@ class LibraryServiceTest {
         User user = new User("Jane Doe", UserRole.TEACHER);
         libraryService.borrowBook(user, "Animal Farm");
         String result = libraryService.returnBook(user, "Animal Farm");
+        //Assert
         assertTrue(result.contains("has been returned to the library"));
     }
 

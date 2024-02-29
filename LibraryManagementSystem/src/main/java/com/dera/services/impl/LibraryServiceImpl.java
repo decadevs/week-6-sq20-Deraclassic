@@ -26,7 +26,7 @@ public class LibraryServiceImpl implements LibraryService {
     }
     public void displayQueueBeforeBorrowing(List<User> users, String title) {
         System.out.println();
-        System.out.println("Queue for borrowing '" + title + "':");
+        System.out.println("******************Queue for borrowing '" + title + "'************************");
         users.forEach(user -> System.out.println(user.getRole() + " " + user.getName()));
 
     }
@@ -35,13 +35,14 @@ public class LibraryServiceImpl implements LibraryService {
             System.out.println("No borrowers for " + title);
             return;
         }
-        System.out.println("List of people who have borrowed " + title + ":");
+        System.out.println("**********************List of people who have borrowed " + title + "***********************");
         List<User> borrowers = bookBorrowers.get(title);
         borrowers.forEach(borrower -> System.out.println(borrower.getRole() + " " + borrower.getName() + " - " + title));
     }
     public void borrowBooksForUsers(List<User> users, String title) {
         users.forEach(user -> borrowBook(user, title));
     }
+
     @Override
     public String borrowBook(User user, String title) {
 
@@ -74,5 +75,62 @@ public class LibraryServiceImpl implements LibraryService {
         }
         book.setCopies(book.getCopies() + 1);
         return title + " has been returned to the library.";
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public String borrowBookFIFO(User user, String title) {
+
+        try {
+            Book book = books.get(title);
+            if (book == null || book.getCopies() <= 0) {
+                System.out.println(user.getRole() + " " + user.getName() + " cannot borrow " + title + " as it is not available.");
+                return "Book not part of our Catalogue or all copies taken.";
+            }
+            synchronized (this) {
+                book.setCopies(book.getCopies() - 1);
+                bookBorrowers.computeIfAbsent(title, k -> new ArrayList<>()).add(user);
+
+            }
+            return user.getRole() + " " + user.getName() + " has successfully borrowed " + title + ".";
+        } catch (Exception e) {
+            System.err.println("An error occurred while trying to borrow the book: " + e.getMessage());
+            return "An error occurred during the borrowing process.";
+        }
     }
 }
